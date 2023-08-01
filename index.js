@@ -1,18 +1,19 @@
 // Import required modules
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+import express, { json, urlencoded } from "express";
+import cors from "cors";
+import { config } from "dotenv";
+import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 
 // Load environment variables from .env file
-dotenv.config();
+config();
 
 // Create the Express app
 const app = express();
 
 // Set up CORS middleware
 app.use(cors());
-app.use(express.json());
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 // Connect to MongoDB
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.otylb.mongodb.net/?retryWrites=true&w=majority`;
@@ -24,7 +25,6 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
-
 
 // helper functions
 function calculateReviews(products) {
@@ -56,7 +56,6 @@ function calculateReview(product) {
   return product;
 }
 
-
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -65,6 +64,10 @@ async function run() {
     const db = client.db("pc-builder");
     const productCollection = db.collection("products");
     const categoriesCollection = db.collection("categories");
+
+    app.get("/", async (req, res) => {
+      res.json({ success: true });
+    });
 
     // ==============================================
     // Get all the products
