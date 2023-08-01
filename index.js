@@ -1,8 +1,13 @@
 // Import required modules
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+// const express = require("express");
+// const cors = require("cors");
+// const dotenv = require("dotenv");
+// const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'cors';
+import {MongoClient, ServerApiVersion, ObjectId} from 'mongodb';
+
 
 // Load environment variables from .env file
 dotenv.config();
